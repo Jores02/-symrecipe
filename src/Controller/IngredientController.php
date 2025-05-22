@@ -27,6 +27,35 @@ use Doctrine\ORM\EntityManagerInterface;
         ]);
 
     }
+    #[Route('/ingredient/edit/{id}', 'ingredient_edit', methods: ['GET', 'POST'])]
+public function edit(
+    Request $request,
+    EntityManagerInterface $manager,
+    Ingredient $ingredient
+): Response
+{
+    $form = $this->createForm(IngredientType::class, $ingredient);
+
+    $form->handleRequest($request);
+    if ($form->isSubmitted() && $form->isValid()) {
+        $ingredient = $form->getData();
+
+        // $manager->persist($ingredient);
+        $manager->flush();
+
+        $this->addFlash(
+            'success',
+            'Vos changements ont été enregistrés !'
+        );
+
+        return $this->redirectToRoute('app_ingredient');
+    }
+
+    return $this->render('pages/ingredient/edit.html.twig', [
+        'form' => $form,
+    ]);
+}
+
     #[Route('/ingredient/nouveau','ingredient_new',methods:['GET','POST'])]
     public function new(Request $request, EntityManagerInterface $manager): Response
     {
