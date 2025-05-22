@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Doctrine\ORM\EntityManagerInterface;
 
 
-final class IngredientController extends AbstractController
+ class IngredientController extends AbstractController
 {
     #[Route('/ingredient', name: 'app_ingredient')]
     public function index(IngredientRepository $repository, PaginatorInterface $paginator, Request $request): Response
