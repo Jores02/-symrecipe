@@ -31,7 +31,11 @@
     </a>
 </td>
 
-                    <td><a href="#" class="btn btn-danger btn-sm">TODO</a></td>
+                    <td><a href="{{ path('recipe.delete', {id: recipe.id}) }}" class="btn btn-danger btn-sm"
+   onclick="return confirm('Voulez-vous vraiment supprimer cette recette ?');">
+    Supprimer
+</a>
+</td>
                 </tr>
             {% else %}
                 <tr>

@@ -68,5 +68,14 @@ public function edit(Recipe $recipe, Request $request, EntityManagerInterface $e
     ]);
 }
 
+        #[Route('/recipe/delete/{id}', name: 'recipe.delete', methods: ['POST', 'GET'])]
+public function delete(Recipe $recipe, EntityManagerInterface $em): Response
+{
+    $em->remove($recipe);
+    $em->flush();
+
+    $this->addFlash('success', 'La recette a bien été supprimée !');
+    return $this->redirectToRoute('recipe.index');
+}
 
 }
