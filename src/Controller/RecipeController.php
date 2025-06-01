@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Controller;
-
+use App\Entity\Recipe;
+use App\Form\RecipeType; 
+use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\RecipeRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -24,4 +26,27 @@ class RecipeController extends AbstractController
             'recipes' => $recipes,
         ]);
     }
+
+#[Route('/recipe/create', name: 'recipe.create')]
+public function create(Request $request, EntityManagerInterface $em): Response
+{
+    $recipe = new Recipe();
+    $form = $this->createForm(RecipeType::class, $recipe);
+
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+        $em->persist($recipe);
+        $em->flush();
+
+        $this->addFlash('success', 'La recette a bien été créée !');
+
+        return $this->redirectToRoute('recipe.index');
+    }
+
+    return $this->render('pages/recipe/create.html.twig', [
+        'form' => $form->createView(),
+    ]);
+}
+
 }
