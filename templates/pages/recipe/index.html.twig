@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes recettes{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1 class="mb-4">Mes recettes</h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Numéro</th>
+                <th>Nom</th>
+                <th>Prix</th>
+                <th>Difficulté</th>
+                <th>Date de création</th>
+                <th>Édition</th>
+                <th>Suppression</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for recipe in recipes %}
+                <tr>
+                    <td>{{ recipe.id }}</td>
+                    <td>{{ recipe.name }}</td>
+                    <td>{{ recipe.price ?? 'Non renseigné' }}</td>
+                    <td>{{ recipe.difficulty ?? 'Non renseigné' }}</td>
+                    <td>{{ recipe.createdAt|date('d/m/Y') }}</td>
+                    <td><a href="#" class="btn btn-warning btn-sm">TODO</a></td>
+                    <td><a href="#" class="btn btn-danger btn-sm">TODO</a></td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7" class="text-center">Aucune recette trouvée.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="d-flex justify-content-center">
+        {{ knp_pagination_render(recipes) }}
+    </div>
+</div>
+{% endblock %}
