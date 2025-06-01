@@ -48,5 +48,25 @@ public function create(Request $request, EntityManagerInterface $em): Response
         'form' => $form->createView(),
     ]);
 }
+#[Route('/recipe/edit/{id}', name: 'recipe.edit')]
+public function edit(Recipe $recipe, Request $request, EntityManagerInterface $em): Response
+{
+    $form = $this->createForm(RecipeType::class, $recipe);
+
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+        $em->flush();
+
+        $this->addFlash('success', 'La recette a bien été modifiée !');
+        return $this->redirectToRoute('recipe.index');
+    }
+
+    return $this->render('pages/recipe/edit.html.twig', [
+        'form' => $form->createView(),
+        'recipe' => $recipe,
+    ]);
+}
+
 
 }

@@ -25,7 +25,12 @@
                     <td>{{ recipe.price ?? 'Non renseigné' }}</td>
                     <td>{{ recipe.difficulty ?? 'Non renseigné' }}</td>
                     <td>{{ recipe.createdAt|date('d/m/Y') }}</td>
-                    <td><a href="#" class="btn btn-warning btn-sm">TODO</a></td>
+                    <td>
+    <a href="{{ path('recipe.edit', {id: recipe.id}) }}" class="btn btn-warning btn-sm">
+        Modifier
+    </a>
+</td>
+
                     <td><a href="#" class="btn btn-danger btn-sm">TODO</a></td>
                 </tr>
             {% else %}
